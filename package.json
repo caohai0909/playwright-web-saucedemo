@@ -1,0 +1,42 @@
+{
+  "name": "saucedemo-automation",
+  "version": "1.0.0",
+  "description": "Playwright TypeScript Automation Framework for Saucedemo",
+  "scripts": {
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:ui": "playwright test --ui",
+    "test:chrome": "playwright test --project=chromium",
+    "test:debug": "playwright test --debug",
+    "report": "playwright show-report",
+    "clean": "rm -rf test-results playwright-report",
+    "test:smoke": "playwright test --grep @smoke",
+    "test:critical": "playwright test --grep @critical",
+    "test:regression": "playwright test --grep @regression",
+    "test:e2e": "playwright test --grep @e2e",
+    "test:login": "playwright test --grep @login",
+    "test:products": "playwright test --grep @products",
+    "test:cart": "playwright test --grep @cart",
+    "test:checkout": "playwright test --grep @checkout",
+    "test:negative": "playwright test --grep @negative",
+    "test:validation": "playwright test --grep @validation",
+    "test:sorting": "playwright test --grep @sorting",
+    "test:navigation": "playwright test --grep @navigation",
+    "test:not-smoke": "playwright test --grep-invert @smoke",
+    "test:smoke-headed": "playwright test --grep @smoke --headed",
+    "test:smoke-ui": "playwright test --grep @smoke --ui"
+  },
+  "keywords": [
+    "playwright",
+    "typescript",
+    "automation",
+    "testing"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.40.0",
+    "@types/node": "^20.10.0",
+    "typescript": "^5.3.0"
+  }
+}

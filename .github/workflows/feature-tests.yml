@@ -1,0 +1,44 @@
+# .github/workflows/feature-tests.yml
+name: Feature-Specific Tests
+
+on:
+  push:
+    branches:
+      - 'feature/**'
+
+jobs:
+  detect-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          
+      - name: Install dependencies
+        run: npm ci
+        
+      - name: Install Playwright
+        run: npx playwright install --with-deps chromium
+      
+      # Determine which feature to test based on branch name
+      - name: Determine Test Suite
+        id: test-suite
+        run: |
+          BRANCH_NAME=${GITHUB_REF#refs/heads/feature/}
+          if [[ $BRANCH_NAME == *"login"* ]]; then
+            echo "suite=@login" >> $GITHUB_OUTPUT
+          elif [[ $BRANCH_NAME == *"cart"* ]]; then
+            echo "suite=@cart" >> $GITHUB_OUTPUT
+          elif [[ $BRANCH_NAME == *"checkout"* ]]; then
+            echo "suite=@checkout" >> $GITHUB_OUTPUT
+          elif [[ $BRANCH_NAME == *"product"* ]]; then
+            echo "suite=@products" >> $GITHUB_OUTPUT
+          else
+            echo "suite=@smoke" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: Run Feature Tests
+        run: npx playwright test --grep "${{ steps.test-suite.outputs.suite }}"

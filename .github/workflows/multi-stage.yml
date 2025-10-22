@@ -1,0 +1,53 @@
+# .github/workflows/multi-stage.yml
+name: Multi-Stage Testing
+
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  # Stage 1: Quick smoke check
+  smoke-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:smoke
+      
+      - name: Upload smoke results
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: smoke-results
+          path: playwright-report/
+
+  # Stage 2: Validation tests (runs after smoke)
+  validation-tests:
+    needs: smoke-tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:validation
+      
+  # Stage 3: Regression tests (runs after validation)
+  regression-tests:
+    needs: validation-tests
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.base.ref == 'main'
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      - run: npm ci
+      - run: npx playwright install --with-deps
+      - run: npm run test:regression
