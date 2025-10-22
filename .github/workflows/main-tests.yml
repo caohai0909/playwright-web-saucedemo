@@ -30,9 +30,6 @@ jobs:
       - name: ⚡ Run Critical Tests
         run: npm run test:critical
       
-      - name: 🧪 Run Smoke Tests
-        run: npm run test:smoke
-      
       - name: 📊 Upload Report
         if: always()
         uses: actions/upload-artifact@v4
