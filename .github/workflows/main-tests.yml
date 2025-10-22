@@ -1,0 +1,42 @@
+name: 🚀 Main Branch Tests
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  critical-tests:
+    name: Run Critical Tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+      
+      - name: 🟢 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+      
+      - name: 📦 Install dependencies
+        run: npm ci
+      
+      - name: 🎭 Install Playwright
+        run: npx playwright install --with-deps chromium
+      
+      - name: ⚡ Run Critical Tests
+        run: npm run test:critical
+      
+      - name: 🧪 Run Smoke Tests
+        run: npm run test:smoke
+      
+      - name: 📊 Upload Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: main-test-report
+          path: playwright-report/
+          retention-days: 30
