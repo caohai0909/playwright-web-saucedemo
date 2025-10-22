@@ -1,0 +1,5 @@
+# Tạo folder .github/workflows
+mkdir -p .github/workflows
+
+# Tạo file workflow
+touch .github/workflows/playwright-tests.yml
