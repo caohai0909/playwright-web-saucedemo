@@ -1,5 +1,5 @@
 import { test, expect } from '../fixtures/customFixtures';
-import { TestData } from '../utils/testData';
+import { TestData } from '../data/testData';
 
 test.describe('Login Functionality Tests', { tag: '@login' }, () => {
   test.beforeEach(async ({ loginPage }) => {

@@ -1,5 +1,5 @@
 import { test, expect } from '../fixtures/customFixtures';
-import { TestData } from '../utils/testData';
+import { TestData } from '../data/testData';
 import { SUCCESS_MESSAGES } from '../utils/constants';
 
 test.describe('Checkout Process Tests', { tag: '@checkout' }, () => {

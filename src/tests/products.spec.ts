@@ -1,5 +1,5 @@
 import { test, expect } from '../fixtures/customFixtures';
-import { TestData } from '../utils/testData';
+import { TestData } from '../data/testData';
 import { Helpers } from '../utils/helpers';
 
 test.describe('Products Page Tests', { tag: '@products' }, () => {

@@ -1,5 +1,5 @@
 import { test, expect } from '../fixtures/customFixtures';
-import { TestData } from '../utils/testData';
+import { TestData } from '../data/testData';
 
 test.describe('Shopping Cart Tests', { tag: '@cart' }, () => {
   test.beforeEach(async ({ loginPage, productsPage }) => {
